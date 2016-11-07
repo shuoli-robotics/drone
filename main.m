@@ -17,6 +17,8 @@ for i = 0:step:simulation_time
     %% drone dynamics
     drone_states(:,pointer+1) = runge_kutta_drone(drone_states(:,pointer),actuator_states(:,pointer+1));
     
+   
+    
     %%
     pointer = pointer+1;
     time(pointer) = i;
