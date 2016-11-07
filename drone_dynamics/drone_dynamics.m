@@ -15,9 +15,9 @@ p = states(10);
 q = states(11);
 r = states(12);
 
-F = (omega(1)^2+omega(2)^2+omega(3)^2+omega(4)^2)*k_F;
-M = [(omega(2)^2-omega(4)^2)*k_F*L (-omega(1)^2+omega(3)^2)*k_F*L ...
-    (k_M*omega(1)^2-k_M*omega(2)^2+k_M*omega(3)^2-k_M*omega(4)^2)]';
+F = (omega(1)^2+omega(2)^2+omega(3)^2+omega(4)^2)*(-k_F);
+M = [(-omega(2)^2+omega(4)^2)*k_F*L (omega(1)^2-omega(3)^2)*k_F*L ...
+    (-k_M*omega(1)^2+k_M*omega(2)^2-k_M*omega(3)^2+k_M*omega(4)^2)]';
 
 
 R_d_angle = [1 tan(theta)*sin(phi) tan(theta)*cos(phi);...
@@ -41,7 +41,7 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(phi) -sin(theta);...
  Omega = [p q r]';
  
  d_position = R_B_E * velocity_body;
- d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 -F]')/m -cross(Omega,velocity_body);
+ d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 F]')/m -cross(Omega,velocity_body);
  d_angle = R_d_angle*Omega;
  d_Omega = inv(I)*(M-cross(Omega,I*Omega));
  

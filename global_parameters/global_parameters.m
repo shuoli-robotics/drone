@@ -3,7 +3,7 @@ function [] = global_parameters()
 %   ????????
 global m I k_F k_M L g
 global simulation_time step pointer;
-global drone_states actuator_states time desired_omega
+global drone_states actuator_states time desired_omega desired_augular_velocity
 %% model parameters
 k_F = 6.11*10^-8;
 k_M = 1.5*10^-9;
@@ -17,16 +17,17 @@ I = [I_xx 0 0; 0 I_yy 0; 0 0 I_zz];
 
 %% simulation parameters
 
-simulation_time = 10;
+simulation_time = 2;
 step = 1/512;
 pointer = 1;
 
 %% states
 drone_states = zeros(12,simulation_time/step);
-drone_states(:,1) = [0 0 3 0 0 0 0 0 0 0 0 0]';
+drone_states(:,1) = [0 0 -3 0 0 0 0 0 0 0 0 0]';
 desired_omega = zeros(4,simulation_time/step);
 actuator_states = zeros(4,simulation_time/step);
 actuator_states(:,1) = 4474;
+desired_augular_velocity = zeros(4,simulation_time/step);
 time = zeros(1,simulation_time/step);
 end
 

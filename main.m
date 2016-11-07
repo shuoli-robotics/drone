@@ -8,8 +8,8 @@ global_parameters();
 
 for i = 0:step:simulation_time
 
-    desired_angular_velocity = [1 1 1]';
-    desired_velocity_body_z = 1;
+    desired_angular_velocity = [0.01 0.01 0.01]';
+    desired_velocity_body_z = -1;
     
     [thrust,moment ] = controller_angular_velocity_PID( desired_angular_velocity,desired_velocity_body_z );
     desired_omega(:,pointer) = convert_force_2_omega(thrust,moment);
