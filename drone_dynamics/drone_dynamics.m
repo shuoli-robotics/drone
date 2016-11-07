@@ -41,7 +41,7 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(phi) -sin(theta);...
  Omega = [p q r]';
  
  d_position = R_B_E * velocity_body;
- d_velocity_body = (R_E_B*[0 0 g]' + [0 0 -F]')/m -cross(Omega,velocity_body);
+ d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 -F]')/m -cross(Omega,velocity_body);
  d_angle = R_d_angle*Omega;
  d_Omega = inv(I)*(M-cross(Omega,I*Omega));
  

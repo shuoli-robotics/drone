@@ -8,8 +8,9 @@ global_parameters();
 
 for i = 0:step:simulation_time
 
-    desired_omega(:,pointer) = [m*g m*g m*g m*g]'/4;
-    
+    thrust = m*g+0.1;
+    moment = [0 0 0]';
+    desired_omega(:,pointer) = convert_force_2_omega(thrust,moment);
     %% actuator dynamics
     actuator_states(:,pointer+1) = runge_kutta_actuator(actuator_states(:,pointer),desired_omega(:,pointer));
     
