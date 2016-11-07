@@ -1,7 +1,7 @@
 function [ d_states ] = drone_dynamics( states,omega )
 % 
 %   
-global m I k_F k_M L g
+global m I k_F k_M L g R_d_angle
 x_earth = states(1);
 y_earth = states(2);
 z_earth = states(3);
