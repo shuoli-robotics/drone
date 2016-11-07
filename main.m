@@ -1,7 +1,7 @@
 function [] = main()
 %MAIN ????????????
 %   ????????
-global simulation_time step pointer m g;
+global simulation_time step pointer;
 global drone_states actuator_states;
 global i time desired_omega desired_angular_velocity
 global_parameters();
@@ -13,7 +13,7 @@ for i = 0:step:simulation_time
     
     
  %% angle controller
-    [ desired_angular_velocity(:,pointer)] = controller_angle_PID( desired_angle);
+    desired_angular_velocity(:,pointer) = controller_angle_PID( desired_angle);
  %% angular velocity controller   
     [thrust,moment] = controller_angular_velocity_PID( desired_angular_velocity(:,pointer),desired_velocity_body_z );
     desired_omega(:,pointer) = convert_force_2_omega(thrust,moment);
@@ -22,9 +22,6 @@ for i = 0:step:simulation_time
     
     %% drone dynamics
     drone_states(:,pointer+1) = runge_kutta_drone(drone_states(:,pointer),actuator_states(:,pointer+1));
-    
-   
-    
     %%
     pointer = pointer+1;
     time(pointer) = i;

@@ -17,7 +17,7 @@ I = [I_xx 0 0; 0 I_yy 0; 0 0 I_zz];
 
 %% simulation parameters
 
-simulation_time = 2;
+simulation_time = 10;
 step = 1/512;
 pointer = 1;
 
