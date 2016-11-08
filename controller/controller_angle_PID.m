@@ -3,8 +3,8 @@ function [ desired_angular_velocity ] = controller_angle_PID( desired_angle )
 %   Detailed explanation goes here
 global drone_states pointer
 
-k_p_angular_velocity_phi = 3;
-k_p_angular_velocity_theta = 3;
+k_p_angular_velocity_phi = 2.5;
+k_p_angular_velocity_theta = 2.1;
 k_p_angular_velocity_psi = 3;
 
 phi = drone_states(7);

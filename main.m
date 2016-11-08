@@ -8,7 +8,7 @@ global_parameters();
 
 for i = 0:step:simulation_time
 
-    desired_angle = [0.3 0.3 0]';
+    desired_angle = [6/180*pi 6/180*pi 0]';
     desired_velocity_body_z = 0;
     
     
