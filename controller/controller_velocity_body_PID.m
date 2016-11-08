@@ -3,8 +3,8 @@ function [ desired_angle,F ] = controller_velocity_body_PID( desired_velocity_bo
 %   ????????
 global drone_states pointer g m
 
-k_p_v_x_body = 1;
-k_p_v_y_body = 1;
+k_p_v_x_body = 1.5;
+k_p_v_y_body = 1.5;
 k_p_v_z_body = 5;
 
 u = drone_states(4,pointer);

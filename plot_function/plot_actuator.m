@@ -2,7 +2,7 @@ function [ ] = plot_actuator()
 %PLOT_ACTUATOR ????????????
 %   ????????
 global actuator_states time drone_states desired_omega pointer desired_angular_velocity
-global desired_angle
+global desired_angle desired_velocity_body
 figure(1);
 desired_omega(:,pointer) = desired_omega(:,end);
 subplot(2,2,1)
@@ -19,6 +19,7 @@ plot(time,actuator_states(4,:),time,desired_omega(4,:));
 figure(2)
 desired_angular_velocity(:,pointer) = desired_angular_velocity(:,end);
 desired_angle(:,pointer) = desired_angle(:,end);
+desired_velocity_body(:,pointer) = desired_angle(:,end);
 subplot(4,3,1)
 plot(time,drone_states(1,:));
 subplot(4,3,2)
@@ -26,11 +27,11 @@ plot(time,drone_states(2,:));
 subplot(4,3,3)
 plot(time,drone_states(3,:));
 subplot(4,3,4)
-plot(time,drone_states(4,:));
+plot(time,drone_states(4,:),time,desired_velocity_body(1,:));
 subplot(4,3,5)
-plot(time,drone_states(5,:));
+plot(time,drone_states(5,:),time,desired_velocity_body(2,:));
 subplot(4,3,6)
-plot(time,drone_states(6,:));
+plot(time,drone_states(6,:),time,desired_velocity_body(3,:));
 subplot(4,3,7)
 plot(time,drone_states(7,:),time,desired_angle(1,:));
 subplot(4,3,8)
