@@ -3,7 +3,7 @@ function [] = global_parameters()
 %   ????????
 global m I k_F k_M L g
 global simulation_time step pointer;
-global drone_states actuator_states time desired_omega desired_augular_velocity
+global drone_states actuator_states time desired_omega desired_augular_velocity desired_angle
 %% model parameters
 k_F = 6.11*10^-8;
 k_M = 1.5*10^-9;
@@ -28,6 +28,7 @@ desired_omega = zeros(4,simulation_time/step);
 actuator_states = zeros(4,simulation_time/step);
 actuator_states(:,1) = 4474;
 desired_augular_velocity = zeros(4,simulation_time/step);
+desired_angle = zeros(3,simulation_time/step);;
 time = zeros(1,simulation_time/step);
 end
 
