@@ -8,12 +8,8 @@ global desired_angle desired_velocity_body desired_position
 global_parameters();
 
 for i = 0:step:simulation_time
-    if pointer == 102
-        temp=1;
-    end
 
-    desired_position(:,pointer) = [2*sin(2*pi/5*i) 2*sin(2*pi/5*i) -1]';
-    % 2*sin(2*pi/5*i)
+    desired_position(:,pointer) = [2*sin(2*pi/5*i) 0  0]';
     desired_psi = 0;
     [ desired_velocity_body(:,pointer) ] = controller_position_PID(desired_position(:,pointer));
    % desired_velocity_body(:,pointer) = [0 1 0]';
