@@ -16,7 +16,7 @@ switch controller
     case 'INDI'
         k_p_angular_velocity_p = 8;
         k_p_angular_velocity_q = 8;
-        k_p_angular_velocity_r = 8;
+        k_p_angular_velocity_r = 4;
 
         current_angular_velocity = drone_states(10:12,pointer);
 

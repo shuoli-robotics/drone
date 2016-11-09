@@ -94,14 +94,6 @@ ylabel('r[degree/s]');
 legend('real','ref');
 
 figure(3)
-plot3(drone_states(1,:),drone_states(2,:),-drone_states(3,:),'b','LineWidth',2);
-hold on;
-plot3(desired_position(:,1),desired_position(:,2),-desired_position(:,3),...
-    'r --','LineWidth',2);
-xlabel('x[m]');
-ylabel('y[m]');
-zlabel('z[m]');
-legend('real','ref');
-grid on;
+plot3(drone_states(1,:),drone_states(2,:),-drone_states(3,:),'LineWidth',2)
 end
 

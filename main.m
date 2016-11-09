@@ -7,7 +7,7 @@ global i time desired_omega desired_angular_velocity
 global desired_angle desired_velocity_body desired_position m g
 global controller guidance
 
-controller = 'INDI';  % INDI
+controller = 'INDI';  % INDI or PID
 guidance = 'STEP'; % 
 
 global_parameters();
@@ -15,16 +15,16 @@ global_parameters();
 for i = 0:step:simulation_time
     
     [ desired_position(:,pointer),desired_angle(3,pointer) ] = guidance_drone();
-    
+    %desired_position(:,pointer)=[2 2 2]';
  %% position controller
     [ desired_velocity_body(:,pointer) ] = controller_position(desired_position(:,pointer));
 
    %% velocity controller
-   %desired_velocity_body(:,pointer) = [0 0 1]';
+   %desired_velocity_body(:,pointer) = [1 1 -1]';
     [ desired_angle(1:2,pointer),F ] = controller_velocity_body( desired_velocity_body(:,pointer) );
 
  %% angle controller
-  %desired_angle(:,pointer) = [0.2 0.2 0.2]';
+  %desired_angle(:,pointer) = [0.5 0.5 0.5]';
     desired_angular_velocity(:,pointer) = controller_angle( desired_angle(:,pointer));
     %temp = desired_angular_velocity(:,pointer)
  %% angular velocity controller 

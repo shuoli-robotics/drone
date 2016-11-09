@@ -6,9 +6,9 @@ global drone_states  position_error pointer step controller
 switch controller
     case 'PID'
 
-        k_p_x = 2;
-        k_p_y = 2;
-        k_p_z = 1.5;
+        k_p_x = 0.6;
+        k_p_y = 0.6;
+        k_p_z = 1.2;
 
         k_d_x = 0;
         k_d_y = 0;
@@ -37,9 +37,9 @@ switch controller
         desired_body_velocity = R_E_B*desired_velocity_earth;
         
     case 'INDI'
-                k_p_x = 2;
-        k_p_y = 2;
-        k_p_z = 1.5;
+        k_p_x = 0.6;
+        k_p_y = 0.6;
+        k_p_z = 1.2;
 
         k_d_x = 0;
         k_d_y = 0;

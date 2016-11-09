@@ -5,13 +5,13 @@ global drone_states pointer angle_error step controller
 
 switch controller
     case 'PID'
-        k_p_angular_velocity_phi = 10;
-        k_p_angular_velocity_theta = 10;
+        k_p_angular_velocity_phi = 3;
+        k_p_angular_velocity_theta = 3;
         k_p_angular_velocity_psi = 3;
 
-        k_d_angular_velocity_phi = 1;
-        k_d_angular_velocity_theta = 1;
-        k_d_angular_velocity_psi = 0.2;
+        k_d_angular_velocity_phi = 0;
+        k_d_angular_velocity_theta = 0;
+        k_d_angular_velocity_psi = 0;
 
         % k_d_angular_velocity_phi = 0;
         % k_d_angular_velocity_theta = 0;
@@ -19,12 +19,12 @@ switch controller
 
         
     case 'INDI'
-        k_p_angular_velocity_phi = 4;
-        k_p_angular_velocity_theta = 4;
+        k_p_angular_velocity_phi = 3;
+        k_p_angular_velocity_theta = 3;
         k_p_angular_velocity_psi = 1.5;
         
-        k_d_angular_velocity_phi = 0.2;
-        k_d_angular_velocity_theta = 0.3;
+        k_d_angular_velocity_phi = 0;
+        k_d_angular_velocity_theta = 0;
         k_d_angular_velocity_psi = 0;
 end
 

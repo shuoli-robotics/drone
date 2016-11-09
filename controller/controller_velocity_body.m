@@ -5,8 +5,8 @@ global drone_states pointer g m velocity_body_error step i controller
 
 switch controller
     case 'PID'
-        k_p_v_x_body = 5;
-        k_p_v_y_body = 5;
+        k_p_v_x_body = 1.3;
+        k_p_v_y_body = 1.3;
         k_p_v_z_body = 3;
 
         k_d_v_x_body = 0;
@@ -39,12 +39,12 @@ switch controller
         F = (-g + k_p_v_z_body*velocity_body_error(3,pointer))*m; 
         desired_angle = [desired_phi desired_theta]';
     case 'INDI'
-        k_p_v_x_body = 5;
-        k_p_v_y_body = 5;
+        k_p_v_x_body = 1.3;
+        k_p_v_y_body = 1.3;
         k_p_v_z_body = 3;
 
-        k_d_v_x_body = 0.3;
-        k_d_v_y_body = 0.3;
+        k_d_v_x_body = 0;
+        k_d_v_y_body = 0;
         k_d_v_z_body = 0;
 
         u = drone_states(4,pointer);
