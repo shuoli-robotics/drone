@@ -11,8 +11,12 @@ k_d_angular_velocity_phi = 1;
 k_d_angular_velocity_theta = 1;
 k_d_angular_velocity_psi = 0.2;
 
-phi = drone_states(7);
-theta = drone_states(8);
+% k_d_angular_velocity_phi = 0;
+% k_d_angular_velocity_theta = 0;
+% k_d_angular_velocity_psi = 0;
+
+phi = drone_states(7,pointer);
+theta = drone_states(8,pointer);
 
 R_d_angle = [1 tan(theta)*sin(phi) tan(theta)*cos(phi);...
     0 cos(phi) -sin(phi);...
@@ -32,7 +36,8 @@ d_angle_needed = [k_p_angular_velocity_phi k_p_angular_velocity_theta k_p_angula
     [k_d_angular_velocity_phi k_d_angular_velocity_theta k_d_angular_velocity_psi]' ...
     .* d_angle_error;
 
-desired_angular_velocity = inv(R_d_angle)*d_angle_needed; 
-
+%desired_angular_velocity = inv(R_d_angle)*d_angle_needed; 
+desired_angular_velocity =d_angle_needed;
+%temp = inv(R_d_angle); 
 end
 

@@ -11,9 +11,9 @@ k_d_x = 0;
 k_d_y = 0;
 k_d_z = 0;
 
-phi = drone_states(7);
-theta = drone_states(8);
-psi= drone_states(9);
+phi = drone_states(7,pointer);
+theta = drone_states(8,pointer);
+psi= drone_states(9,pointer);
 
 R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(phi) -sin(theta);...
      sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi)...

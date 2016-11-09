@@ -1,11 +1,11 @@
 function [ desired_angle,F ] = controller_velocity_body_PID( desired_velocity_body )
 %CONTROLLER_VELOCITY_BODY ????????????
 %   ????????
-global drone_states pointer g m velocity_body_error step
+global drone_states pointer g m velocity_body_error step i
 
 k_p_v_x_body = 5;
 k_p_v_y_body = 5;
-k_p_v_z_body = 7;
+k_p_v_z_body = 3;
 
 k_d_v_x_body = 0;
 k_d_v_y_body = 0;
@@ -30,10 +30,10 @@ else
 end
 
 desired_theta = (k_p_v_x_body*(velocity_body_error(1,pointer) + ...
-    k_d_v_x_body*d_velocity_error(1))+(q*w-r*v))/(-g);
+    k_d_v_x_body*d_velocity_error(1)))/(-g);
 
 desired_phi = (k_p_v_y_body*(velocity_body_error(2,pointer)+...
-    k_d_v_y_body*d_velocity_error(2))+(r*u-p*w))/(g);
+    k_d_v_y_body*d_velocity_error(2)))/(g);
 F = (-g + k_p_v_z_body*velocity_body_error(3,pointer))*m; 
 desired_angle = [desired_phi desired_theta]';
 end
