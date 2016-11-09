@@ -36,8 +36,8 @@ d_angle_needed = [k_p_angular_velocity_phi k_p_angular_velocity_theta k_p_angula
     [k_d_angular_velocity_phi k_d_angular_velocity_theta k_d_angular_velocity_psi]' ...
     .* d_angle_error;
 
-%desired_angular_velocity = inv(R_d_angle)*d_angle_needed; 
-desired_angular_velocity =d_angle_needed;
+desired_angular_velocity = [1 0 -sin(theta);0 cos(phi) cos(theta)*sin(phi);0 -sin(phi) cos(theta)*cos(phi)]*d_angle_needed; 
+
 %temp = inv(R_d_angle); 
 end
 
