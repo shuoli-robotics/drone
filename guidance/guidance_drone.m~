@@ -1,0 +1,10 @@
+function [ desired_position,desired_psi ] = guidance_drone()
+%GUIDANCE_DRONE Summary of this function goes here
+%   Detailed explanation goes here
+global time guidance
+
+switch guidance
+    case s
+
+end
+
