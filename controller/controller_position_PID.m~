@@ -3,19 +3,19 @@ function [ desired_body_velocity ] = controller_position_PID( desired_position )
 %   ????????
 global drone_states  position_error pointer step
 
-k_p_x = 2;
+k_p_x = 5;
 k_p_y = 2;
 k_p_z = 1.5;
 
-k_d_x = 0;
+k_d_x = 0.5;
 k_d_y = 0;
 k_d_z = 0;
 
-phi = drone_states(7);
-theta = drone_states(8);
-psi= drone_states(9);
+phi = drone_states(7,pointer);
+theta = drone_states(8,pointer);
+psi= drone_states(9,pointer);
 
-R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(phi) -sin(theta);...
+R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
      sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi)...
      sin(phi)*sin(theta)*sin(psi)+cos(phi)*cos(psi) sin(phi)*cos(theta);...
      cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi)...

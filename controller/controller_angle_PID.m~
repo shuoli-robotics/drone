@@ -38,13 +38,10 @@ d_angle_needed = [k_p_angular_velocity_phi k_p_angular_velocity_theta k_p_angula
 
 desired_angular_velocity = [1 0 -sin(theta);0 cos(phi) cos(theta)*sin(phi);0 -sin(phi) cos(theta)*cos(phi)]*d_angle_needed;
 
-% for j = 1:3
-%     if desired_angular_velocity(j) < -10
-%         desired_angular_velocity(j) = -10;
-%     elseif desired_angular_velocity(j) > 10
-%         desired_angular_velocity(j) = 10;
-%     end
-% end
+for j = 1:3
+    if desired_angular_velocity(j) < -10
+        desired_angular_velocity(j) = -10;
+    elseif 
 
 %temp = inv(R_d_angle); 
 end

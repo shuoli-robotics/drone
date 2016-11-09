@@ -23,28 +23,64 @@ desired_velocity_body(:,pointer) = desired_angle(:,end);
 desired_position(:,pointer) =desired_position(:,end);
 subplot(4,3,1)
 plot(time,drone_states(1,:),time,desired_position(1,:));
+xlabel('t/s');
+ylabel('x earth[m]');
+legend('real','ref');
 subplot(4,3,2)
 plot(time,drone_states(2,:),time,desired_position(2,:));
+xlabel('t/s');
+ylabel('y earth[m]');
+legend('real','ref');
 subplot(4,3,3)
 plot(time,drone_states(3,:),time,desired_position(3,:));
+xlabel('t/s');
+ylabel('z earth[m]');
+legend('real','ref');
 subplot(4,3,4)
 plot(time,drone_states(4,:),time,desired_velocity_body(1,:));
+xlabel('t/s');
+ylabel('x body[m/s]');
+legend('real','ref');
 subplot(4,3,5)
 plot(time,drone_states(5,:),time,desired_velocity_body(2,:));
+xlabel('t/s');
+ylabel('y body[m/s]');
+legend('real','ref');
 subplot(4,3,6)
 plot(time,drone_states(6,:),time,desired_velocity_body(3,:));
+xlabel('t/s');
+ylabel('z body[m/s]');
+legend('real','ref');
 subplot(4,3,7)
-plot(time,drone_states(7,:),time,desired_angle(1,:));
+plot(time,drone_states(7,:)/pi*180,time,desired_angle(1,:)/pi*180);
+xlabel('t/s');
+ylabel('Phi[degree]');
+legend('real','ref');
 subplot(4,3,8)
-plot(time,drone_states(8,:),time,desired_angle(2,:));
+plot(time,drone_states(8,:)/pi*180,time,desired_angle(2,:)/pi*180);
+xlabel('t/s');
+ylabel('Theta[degree]');
+legend('real','ref');
 subplot(4,3,9)
-plot(time,drone_states(9,:),time,desired_angle(3,:));
+plot(time,drone_states(9,:)/pi*180,time,desired_angle(3,:)/pi*180);
+xlabel('t/s');
+ylabel('Psi[degree]');
+legend('real','ref');
 subplot(4,3,10)
-plot(time,drone_states(10,:),time,desired_angular_velocity(1,:));
+plot(time,drone_states(10,:)/pi*180,time,desired_angular_velocity(1,:)/pi*180);
+xlabel('t/s');
+ylabel('p[degree/s]');
+legend('real','ref');
 subplot(4,3,11)
-plot(time,drone_states(11,:),time,desired_angular_velocity(2,:));
+plot(time,drone_states(11,:)/pi*180,time,desired_angular_velocity(2,:)/pi*180);
+xlabel('t/s');
+ylabel('q[degree/s]');
+legend('real','ref');
 subplot(4,3,12)
-plot(time,drone_states(12,:),time,desired_angular_velocity(3,:));
+plot(time,drone_states(12,:)/pi*180,time,desired_angular_velocity(3,:)/pi*180);
+xlabel('t/s');
+ylabel('r[degree/s]');
+legend('real','ref');
 
 
 end
