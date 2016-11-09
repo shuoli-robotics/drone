@@ -7,13 +7,24 @@ figure(1);
 desired_omega(:,pointer) = desired_omega(:,end);
 subplot(2,2,1)
 plot(time,actuator_states(1,:),time,desired_omega(1,:));
-
+xlabel('t/s');
+ylabel('rotor1 speed[rpm]');
+legend('real','ref');
 subplot(2,2,2)
 plot(time,actuator_states(2,:),time,desired_omega(2,:));
+xlabel('t/s');
+ylabel('rotor2 speed[rpm]');
+legend('real','ref');
 subplot(2,2,3)
 plot(time,actuator_states(3,:),time,desired_omega(3,:));
+xlabel('t/s');
+ylabel('rotor3 speed[rpm]');
+legend('real','ref');
 subplot(2,2,4)
 plot(time,actuator_states(4,:),time,desired_omega(4,:));
+xlabel('t/s');
+ylabel('rotor4 speed[rpm]');
+legend('real','ref');
 
 
 figure(2)

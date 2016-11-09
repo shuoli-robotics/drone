@@ -1,7 +1,9 @@
-function [ desired_body_velocity ] = controller_position_PID( desired_position )
+function [ desired_body_velocity ] = controller_position( desired_position )
 %CONTROLLER_POSITION ????????????
 %   ????????
-global drone_states  position_error pointer step
+global drone_states  position_error pointer step controller
+
+switch controller
 
 k_p_x = 2;
 k_p_y = 2;

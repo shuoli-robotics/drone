@@ -1,7 +1,7 @@
 function [ d_states ] = drone_dynamics( states,omega )
 % 
 %   
-global m I k_F k_M L g R_d_angle pointer
+global m I k_F k_M L g R_d_angle current_angular_velocity_accel
 x_earth = states(1);
 y_earth = states(2);
 z_earth = states(3);
@@ -46,6 +46,8 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
  d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 F]')/m -cross(Omega,velocity_body);
  d_angle = R_d_angle*Omega;
  d_Omega = inv(I)*(M-cross(Omega,I*Omega));
+ 
+ current_angular_velocity_accel = d_Omega;
  
  d_states = [d_position;d_velocity_body;d_angle;d_Omega];
 end
