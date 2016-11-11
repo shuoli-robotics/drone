@@ -1,7 +1,7 @@
 function [ desired_angular_velocity ] = controller_angle( desired_angle )
 %CONTROLLER_ANGLE Summary of this function goes here
 %   Detailed explanation goes here
-global drone_states pointer angle_error step controller
+global pointer angle_error step controller sensor_states
 
 switch controller
     case 'PID'
@@ -29,11 +29,11 @@ switch controller
 end
 
 
-phi = drone_states(7,pointer);
-theta = drone_states(8,pointer);
+phi = sensor_states(7,pointer);
+theta = sensor_states(8,pointer);
 
 angle_error(:,pointer) = desired_angle - ...
-   [drone_states(7,pointer) drone_states(8,pointer) drone_states(9,pointer)]';
+   [sensor_states(7,pointer) sensor_states(8,pointer) sensor_states(9,pointer)]';
 
 if pointer == 1
     d_angle_error = 0;

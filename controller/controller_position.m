@@ -1,7 +1,7 @@
 function [ desired_body_velocity ] = controller_position( desired_position )
 %CONTROLLER_POSITION ????????????
 %   ????????
-global drone_states  position_error pointer step controller
+global position_error pointer step controller sensor_states
 
 switch controller
     case 'PID'
@@ -14,9 +14,9 @@ switch controller
         k_d_y = 0;
         k_d_z = 0;
 
-        phi = drone_states(7,pointer);
-        theta = drone_states(8,pointer);
-        psi= drone_states(9,pointer);
+        phi = sensor_states(7,pointer);
+        theta = sensor_states(8,pointer);
+        psi= sensor_states(9,pointer);
 
         R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
              sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi)...
@@ -24,7 +24,7 @@ switch controller
              cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi)...
              cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi) cos(phi)*cos(theta)];
 
-        current_position = [drone_states(1,pointer) drone_states(2,pointer) drone_states(3,pointer)]';
+        current_position = [sensor_states(1,pointer) sensor_states(2,pointer) sensor_states(3,pointer)]';
         position_error(:,pointer) = desired_position - current_position;
         if (pointer == 1)
             d_position_error = 0;
@@ -45,9 +45,9 @@ switch controller
         k_d_y = 0;
         k_d_z = 0;
 
-        phi = drone_states(7,pointer);
-        theta = drone_states(8,pointer);
-        psi= drone_states(9,pointer);
+        phi = sensor_states(7,pointer);
+        theta = sensor_states(8,pointer);
+        psi= sensor_states(9,pointer);
 
         R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
              sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi)...
@@ -55,7 +55,7 @@ switch controller
              cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi)...
              cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi) cos(phi)*cos(theta)];
 
-        current_position = [drone_states(1,pointer) drone_states(2,pointer) drone_states(3,pointer)]';
+        current_position = [sensor_states(1,pointer) sensor_states(2,pointer) sensor_states(3,pointer)]';
         position_error(:,pointer) = desired_position - current_position;
         if (pointer == 1)
             d_position_error = 0;

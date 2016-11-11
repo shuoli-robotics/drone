@@ -5,6 +5,7 @@ global m I k_F k_M L g
 global simulation_time step pointer;
 global drone_states actuator_states time desired_omega desired_angular_velocity desired_angle desired_velocity_body
 global position_error desired_position angle_error velocity_body_error M_last_step current_angular_velocity_accel
+global sensor_states
 %% model parameters
 k_F = 6.11*10^-8;
 k_M = 1.5*10^-9;
@@ -40,5 +41,9 @@ desired_position = zeros(3,simulation_time/step);
 %% INDI
 M_last_step = 0;
 current_angular_velocity_accel = 0;
+
+%% sensor
+sensor_states = zeros(12,simulation_time/step);
+
 end
 

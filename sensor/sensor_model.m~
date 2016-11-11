@@ -1,0 +1,8 @@
+function [ output_args ] = sensor_model( input_args )
+%SENSOR_MODEL Summary of this function goes here
+%   Detailed explanation goes here
+global drone_states pointer
+
+
+end
+

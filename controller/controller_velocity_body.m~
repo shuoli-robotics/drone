@@ -1,7 +1,7 @@
 function [ desired_angle,F ] = controller_velocity_body( desired_velocity_body )
 %CONTROLLER_VELOCITY_BODY ????????????
 %   ????????
-global  pointer g m velocity_body_error step  controller sensor_states
+global drone_states pointer g m velocity_body_error step i controller
 
 switch controller
     case 'PID'
