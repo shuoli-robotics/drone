@@ -1,7 +1,7 @@
 function [ d_states ] = drone_dynamics( states,omega )
 % 
 %   
-global m I k_F k_M L g R_d_angle current_angular_velocity_accel flag_drag
+global m I k_F k_M L g R_d_angle current_angular_velocity_accel
 x_earth = states(1);
 y_earth = states(2);
 z_earth = states(3);
@@ -36,7 +36,7 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
      cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi) cos(phi)*cos(theta)];
 
  posistion = [x_earth y_earth z_earth]';
- velocity_body = [v_x_body v_y_body v_z_body]' + flag_drag* drag_model(states,F);
+ velocity_body = [v_x_body v_y_body v_z_body]';
  angle = [phi theta psi]';
  Omega = [p q r]';
  
@@ -52,14 +52,7 @@ end
 
 function [D] = drag_model(states,T)
 
-a_bla = -0.0476;
-k_par = -0.0036;
 
-velocity_body = [states(4) states(5) states(6)]';
-A_bla = [a_bla 0 0;0 a_bla 0; 0 0 0];
+D_bla = T *A_bla*velocity;
 
-D_bla_body = T * A_bla * velocity_body;
-D_par_body = k_par * norm(velocity_body) * velocity_body;
-
-D = D_bla_body + D_par_body;
 end
