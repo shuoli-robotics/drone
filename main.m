@@ -8,7 +8,7 @@ global desired_angle desired_velocity_body desired_position m g
 global controller guidance
 
 controller = 'PID';  % INDI or PID
-guidance = 'STEP'; % 
+guidance = 'SET_POINT'; % 
 
 global_parameters();
 %desired_angular_velocity = zeros(3,simulation_time/step);
@@ -27,7 +27,7 @@ for i = 0:step:simulation_time
     [ desired_angle(1:2,pointer),F ] = controller_velocity_body( desired_velocity_body(:,pointer) );
 
  %% angle controller
-  desired_angle(:,pointer) = [0/180*pi 0 0]';
+  %%desired_angle(:,pointer) = [0/180*pi 0 0]';
     desired_angular_velocity(:,pointer) = controller_angle( desired_angle(:,pointer));
     %temp = desired_angular_velocity(:,pointer)
  %% angular velocity controller 

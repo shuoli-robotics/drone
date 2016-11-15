@@ -22,9 +22,8 @@ switch guidance
         
     case 'SET_POINT'
         current_reference = [reference_x(:,pointer);reference_y(:,pointer);reference_z(:,pointer)];
-        [reference_x(:,pointer+1),reference_y(:,pointer+1),reference_z(:,pointer+1)]=runge_kutta_trans_fun(current_reference);
-        desired_position = [reference_x(1,pointer+1);reference_y(1,pointer+1);reference_z(1,pointer+1)];
-         desired_psi = 0;
+        reference_x(1:2,pointer+1)=runge_kutta_trans_fun(current_reference);
+        
 
 end
 
@@ -60,15 +59,15 @@ end
 
 function [dx] = transter_function_model_x(current_x,u)
 
-dx = [0 1;-1.5^2 -3]*current_x + [0 1.5^2]'*u;
+dx = [0 1;-1.5^2 -3]*current_x + [0 1]'*u;
 end
 
 function [dy] = transter_function_model_y(current_y,u)
 
-dy = [0 1;-1.5^2 -3]*current_y + [0 1.5^2]'*u;
+dy = [0 1;-1.5^2 -3]*current_y + [0 1]'*u;
 end
 
 function [dz] = transter_function_model_z(current_y,u)
 
-dz = [0 1;-1.5^2 -3]*current_y + [0 1.5^2]'*u;
+dz = [0 1;-1.5^2 -3]*current_y + [0 1]'*u;
 end
