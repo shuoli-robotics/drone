@@ -1,11 +1,11 @@
-function [] = control_guidance_loop(guidance_metod,ini_states,target_states)
+function [] = control_guidance_loop(ini_states,target_states)
 %MAIN ????????????
 %   ????????
 global simulation_time step pointer;
 global drone_states actuator_states;
 global i time desired_omega desired_angular_velocity
 global desired_angle desired_velocity_body desired_position 
-global controller 
+global controller guidance_method
 
 controller = 'PID';  % INDI or PID
 
@@ -15,7 +15,7 @@ global_parameters(ini_states);
 
 for i = 0:step:simulation_time
     
-    [ desired_position(:,pointer),desired_angle(3,pointer) ] = guidance_drone(guidance_metod,target_states);
+    [ desired_position(:,pointer),desired_angle(3,pointer) ] = guidance_drone(target_states);
     %desired_position(:,pointer)=[2 2 2]';
     
  %% sensor model
@@ -49,7 +49,8 @@ for i = 0:step:simulation_time
     time(pointer) = i;
     
     if strcmp(guidance_method, 'CL_RRT')
-        if norm(drone_states(1:3,pointer)-target_states(1)) < 0.01
+        if norm(drone_states(1:3,pointer)-target_states) < 0.01 ...
+                && norm(drone_states(4:6,pointer)) < 0.1
             break;
         end
     end

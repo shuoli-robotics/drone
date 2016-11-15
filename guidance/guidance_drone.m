@@ -1,7 +1,7 @@
-function [ desired_position,desired_psi ] = guidance_drone(guidance_method,target_states)
+function [ desired_position,desired_psi ] = guidance_drone(target_states)
 %GUIDANCE_DRONE Summary of this function goes here
 %   Detailed explanation goes here
-global time  pointer reference_x reference_y reference_z  
+global time  pointer reference_x reference_y reference_z   guidance_method
 step_distance = 1;
 
 switch guidance_method
@@ -28,7 +28,7 @@ switch guidance_method
          
     case 'CL_RRT'
         desired_position = target_states;
-         desired_psi = 0;
+        desired_psi = 0;
 end
 
 end
