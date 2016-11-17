@@ -3,7 +3,11 @@ function [ ] = plot_actuator()
 %   ????????
 global actuator_states time drone_states desired_omega pointer desired_angular_velocity
 global desired_angle desired_velocity_body desired_position 
+global guidance_method
 
+% if strcmp(guidance_method,'CL_RRT')
+%     return;
+% end
 
 
 
@@ -107,7 +111,4 @@ zlabel('z[m]');
 legend('real','ref');
 grid on;
 
-figure(4)
-plot3(desired_position(1,1:pointer),desired_position(2,1:pointer),-desired_position(3,1:pointer),'g','LineWidth',2);
-end
 

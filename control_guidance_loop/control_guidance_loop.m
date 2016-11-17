@@ -1,4 +1,4 @@
-function [] = control_guidance_loop(ini_states,target_states)
+function [done] = control_guidance_loop(ini_states,target_states)
 %MAIN ????????????
 %   ????????
 global simulation_time step pointer;
@@ -39,6 +39,10 @@ for i = 0:step:simulation_time
     M = controller_angular_velocity( desired_angular_velocity(:,pointer));
 
     desired_omega(:,pointer) = convert_force_2_omega(F,M);
+    if min(desired_omega(:,pointer)) < 0
+        done = 0;
+        return;
+    end
     %% actuator dynamics
     actuator_states(:,pointer+1) = runge_kutta_actuator(actuator_states(:,pointer),desired_omega(:,pointer));
     
@@ -57,7 +61,7 @@ for i = 0:step:simulation_time
     
 end
 
-
-plot_actuator();
+done = 1;
+%plot_actuator();
 end
 
