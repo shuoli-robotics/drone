@@ -95,18 +95,17 @@ inter_nodes = zeros(15,inter_nodes_num);
 for i = 1:inter_nodes_num
     if i ~= inter_nodes_num
         inter_nodes(1:12,i) = drone_states(1:12,ceil(pointer*(0.1+0.5*rand())));
-        if i == 1   % first node
-            inter_nodes(13,i) = father_node;
-        else % second node and second last node
-            inter_nodes(13,i) = tree_pointer+i-1;
-        end
-        plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'.');
-    else  % last node
+    else
         inter_nodes(1:12,i) = drone_states(1:12,pointer);
-        inter_nodes(13,i) = tree_pointer+i-1; 
-        plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'o');
     end
-     
+   % father 
+   if i == 1
+       inter_nodes(13,i) = father_node;
+       plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'o');
+   else
+      inter_nodes(13,i) = tree_pointer+i-1; 
+        plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'*');
+   end   
 end
 rrt_tree(:,tree_pointer+1:tree_pointer+inter_nodes_num) = inter_nodes;
 tree_pointer = tree_pointer + inter_nodes_num;

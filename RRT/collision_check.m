@@ -6,6 +6,8 @@ x_gate = 2.5;
 y_gate = 3;
 z_gate = -1.5;
 
+y_safe_zone
+
 l_gate = 1;
 
 A1 = [x_gate-0.5*l_gate y_gate-0.5*l_gate z_gate-0.5*l_gate];
