@@ -1,23 +1,25 @@
 function [ collision ] = collision_check( p_rand )
 %COLLISION_CHECK 此处显示有关此函数的摘要
 %   此处显示详细说明
+global x_gate y_gate z_gate y_safe_zone l_gate
+
 
 x_gate = 2.5;
 y_gate = 3;
 z_gate = -1.5;
 
-y_safe_zone
+y_safe_zone = 1;
 
-l_gate = 1;
+l_gate = 0.6;
 
-A1 = [x_gate-0.5*l_gate y_gate-0.5*l_gate z_gate-0.5*l_gate];
-A2 = [x_gate+0.5*l_gate y_gate-0.5*l_gate z_gate-0.5*l_gate];
-A3 = [x_gate+0.5*l_gate y_gate+0.5*l_gate z_gate-0.5*l_gate];
-A4 = [x_gate-0.5*l_gate y_gate+0.5*l_gate z_gate-0.5*l_gate];
-A5 = [x_gate-0.5*l_gate y_gate-0.5*l_gate z_gate+0.5*l_gate];
-A6 = [x_gate+0.5*l_gate y_gate-0.5*l_gate z_gate+0.5*l_gate];
-A7 = [x_gate+0.5*l_gate y_gate+0.5*l_gate z_gate+0.5*l_gate];
-A8 = [x_gate-0.5*l_gate y_gate+0.5*l_gate z_gate+0.5*l_gate];
+A1 = [x_gate-0.5*l_gate y_gate-y_safe_zone z_gate-0.5*l_gate];
+A2 = [x_gate+0.5*l_gate y_gate-y_safe_zone z_gate-0.5*l_gate];
+A3 = [x_gate+0.5*l_gate y_gate+y_safe_zone z_gate-0.5*l_gate];
+A4 = [x_gate-0.5*l_gate y_gate+y_safe_zone z_gate-0.5*l_gate];
+A5 = [x_gate-0.5*l_gate y_gate-y_safe_zone z_gate+0.5*l_gate];
+A6 = [x_gate+0.5*l_gate y_gate-y_safe_zone z_gate+0.5*l_gate];
+A7 = [x_gate+0.5*l_gate y_gate+y_safe_zone z_gate+0.5*l_gate];
+A8 = [x_gate-0.5*l_gate y_gate+y_safe_zone z_gate+0.5*l_gate];
 
 theta0 = 30/180*pi;
 theta = [theta0-pi -theta0 theta0 pi-theta0]; % theta1 and theta2 are nagetive

@@ -21,7 +21,7 @@ flag_drag = 1;
 %% simulation parameters
 
 simulation_time = 25;
-step = 1/50;
+step = 1/30;
 pointer = 1;
 
 %% states
