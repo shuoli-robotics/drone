@@ -62,6 +62,6 @@ for i = 0:step:simulation_time
 end
 
 done = 1;
-%plot_actuator();
+plot_actuator();
 end
 
