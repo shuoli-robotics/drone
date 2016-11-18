@@ -17,7 +17,8 @@ trajectory_fail = 0;
 % line 13 if father of this node
 % line 14 is the cost from root to this node
 % line 15 is whether this node is the father of the goal 
-rrt_tree = zeros(15,1000);
+% line 16 is the flag shows that if this node is end node or internode
+rrt_tree = zeros(16,1000);
 rrt_tree(1:12,1) = ini_states;
 fail_to_connect = 0;
 
@@ -104,7 +105,7 @@ function [inter_nodes,inter_nodes_num]=add_nodes_to_rrt(father_node)
 % this function is used to add inter node to the tree
 global drone_states rrt_tree tree_pointer pointer
 inter_nodes_num = 5;
-inter_nodes = zeros(15,inter_nodes_num);
+inter_nodes = zeros(16,inter_nodes_num);
 trajectory_step = (drone_states(1,pointer) - drone_states(1,1))/inter_nodes_num;
 for i = 1:inter_nodes_num
     for j = 1:pointer
@@ -124,6 +125,7 @@ for i = 1:inter_nodes_num
                 inter_nodes(1:12,i) = drone_states(1:12,pointer);
                 inter_nodes(13,i) = tree_pointer+i-1;
                 inter_nodes(14,i) = rrt_tree(14,tree_pointer+i-1)+norm(inter_nodes(1:3,i)-rrt_tree(1:3,tree_pointer+i-1));
+                inter_nodes(16,i) = rrt_tree(14,tree_pointer+i-1)+norm(inter_nodes(1:3,i)-rrt_tree(1:3,tree_pointer+i-1));
                 plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'o');
             end
             break;
@@ -151,7 +153,9 @@ function [] = connect_new_nodes_to_goal(inter_nodes,inter_nodes_num)
 global goal rrt_tree tree_pointer pointer drone_states
 
 for i = 1:inter_nodes_num
-    
+    if ( norm(inter_nodes(1:3,i)-goal') > 3)
+        continue;
+    end
     ini_states = inter_nodes(1:12,i);
        target_states = goal;
        if ~control_guidance_loop(ini_states,target_states)
