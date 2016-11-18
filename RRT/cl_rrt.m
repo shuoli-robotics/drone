@@ -151,6 +151,9 @@ function [] = connect_new_nodes_to_goal(inter_nodes,inter_nodes_num)
 global goal rrt_tree tree_pointer pointer drone_states
 
 for i = 1:inter_nodes_num
+    if ( norm(inter_nodes(1:3,i)-goal') > 3)
+        continue;
+    end
     ini_states = inter_nodes(1:12,i);
        target_states = goal;
        if ~control_guidance_loop(ini_states,target_states)
