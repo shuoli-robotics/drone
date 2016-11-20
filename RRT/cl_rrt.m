@@ -4,7 +4,7 @@ function [optimal_trajectory] = cl_rrt(  )
 global tree_pointer  rrt_tree guidance_method pointer drone_states goal
 
 guidance_method = 'CL_RRT';
-max_num = 200;
+max_num = 500;
 goal = [2.5 5 -1.5];
 tree_pointer = 1;
 ini_states = zeros(12,1);
@@ -164,7 +164,10 @@ for i = 1:inter_nodes_num
         continue;
     end
     ini_states = inter_nodes(1:12,i);
-       target_states = goal;
+       target_states = goal';
+       
+       
+       
        if ~control_guidance_loop(ini_states,target_states)
            continue; % sometimes step is too much for the system
        end
@@ -189,7 +192,7 @@ optimal_trajectory_temp = zeros(3,tree_pointer);
 
 for i = 1:tree_pointer
    if (rrt_tree(15,i) == 1)
-      rrt_tree(14,i) = rrt_tree(14,i)+norm(goal-rrt_tree(1:3,i));
+      rrt_tree(14,i) = rrt_tree(14,i)+norm(goal'-rrt_tree(1:3,i));
       if  rrt_tree(14,i) < minimum_dis
           minimum_dis = rrt_tree(14,i);
           minimum_node = i;
