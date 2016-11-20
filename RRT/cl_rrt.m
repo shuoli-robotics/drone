@@ -1,6 +1,6 @@
 function [optimal_trajectory] = cl_rrt(  )
-%CL_RRT 此处显示有关此函数的摘要
-%   此处显示详细说明
+%CL_RRT ????????????????????????
+%   ????????????????
 global tree_pointer  rrt_tree guidance_method pointer drone_states goal
 
 guidance_method = 'CL_RRT';
@@ -59,7 +59,7 @@ for i = 1:max_num
        if check_collision_of_trajectory()
            trajectory_fail =  trajectory_fail + 1;
            if j == tree_pointer
-               fail_to_connect = 1;
+               fail_to_connect = 1;     % each nodes on the tree cannot connect with p_rand successfully
            end
            continue;
        end
