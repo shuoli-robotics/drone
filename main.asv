@@ -1,7 +1,7 @@
 function [ ] = main(  )
 %MAIN ????????????
 %   ????????
-global guidance_method
+global guidance_method drone_states pointer
 clf;
 guidance_method = 'CL_RRT';
 ini_states = [0 0 -1.5 0 0 0 0 0 0 0 0 0]';

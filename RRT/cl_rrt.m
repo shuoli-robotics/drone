@@ -1,14 +1,13 @@
-function [optimal_trajectory] = cl_rrt(  )
+function [optimal_trajectory] = cl_rrt(target,init_states)
 %CL_RRT ????????????????????????
 %   ????????????????
 global tree_pointer  rrt_tree guidance_method pointer drone_states goal
 
 guidance_method = 'CL_RRT';
 max_num = 500;
-goal = [2.5 5 -1.5];
+goal = target;% [2.5 5 -1.5]
 tree_pointer = 1;
-ini_states = zeros(12,1);
-ini_states(3,1) = -1.5; 
+ini_states = init_states;
 p_rand_collision = 0;
 control_loop_fail = 0;
 trajectory_fail = 0;
@@ -79,7 +78,9 @@ for i = 1:max_num
 end
 
 %% find optimal trajectory
- [optimal_trajectory]=find_optimal_trajectory();
+ [optimal_waypoints]=find_optimal_waypoint();
+ 
+ [optimal_trajectory] = generate_optimal_trajectory(optimal_waypoints,init_states);
 end
 
 
@@ -182,7 +183,7 @@ end
 end
 
 
-function [optimal_trajectory]=find_optimal_trajectory()
+function [optimal_trajectory]=find_optimal_waypoint()
 global rrt_tree tree_pointer goal
 
 minimum_dis = 10000;
@@ -210,5 +211,23 @@ optimal_trajectory(:,1) = goal';
 optimal_trajectory(:,2:end-1) =  optimal_trajectory_temp(:,1:trajectory_pointer-1);
 optimal_trajectory(:,end) = rrt_tree(1:3,1);
 %[goal' rrt_tree(1:3,1) optimal_trajectory_temp(:,1:trajectory_pointer-1) rrt_tree(1:3,1)];
+%plot3(optimal_trajectory(1,:),optimal_trajectory(2,:),-optimal_trajectory(3,:),'r','LineWidth',2);
+end
+
+function [optimal_trajectory] = generate_optimal_trajectory(optimal_waypoints,ini_states)
+global drone_states pointer
+optimal_trajectory = ini_states;
+
+n = size(optimal_waypoints,2);
+for i = 1:n-1
+    if i ~= 1
+        ini_states = drone_states(:,pointer); 
+    end
+   target = optimal_waypoints(:,n-i);
+   control_guidance_loop(ini_states,target);
+   optimal_trajectory = [optimal_trajectory drone_states(:,1:pointer)];
+end
+
 plot3(optimal_trajectory(1,:),optimal_trajectory(2,:),-optimal_trajectory(3,:),'r','LineWidth',2);
+
 end
