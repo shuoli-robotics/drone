@@ -29,6 +29,10 @@ switch guidance_method
     case 'CL_RRT'
         desired_position = target_states;
         desired_psi = 0;
+        
+    case 'REPLAT_RRT'
+        desired_position = target_states;
+        desired_psi = 0;
 end
 
 end

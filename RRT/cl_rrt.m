@@ -17,7 +17,8 @@ trajectory_fail = 0;
 % line 14 is the cost from root to this node
 % line 15 is whether this node is the father of the goal 
 % line 16 is the flag shows that if this node is end node or internode
-rrt_tree = zeros(16,10000);
+% line 17 is the target which leads to this trajectory (inter node)
+rrt_tree = zeros(17,10000);
 rrt_tree(1:12,1) = ini_states;
 fail_to_connect = 0;
 
@@ -122,9 +123,11 @@ for i = 1:inter_nodes_num
                 if i == 1   % first node
                     inter_nodes(13,i) = father_node;
                     inter_nodes(14,i) = rrt_tree(14,father_node)+norm(inter_nodes(1:3,i)-rrt_tree(1:3,father_node));
+                    inter_nodes(17,i) = tree_pointer+inter_nodes_num;  % son
                 else % second node and second last node
                     inter_nodes(13,i) = tree_pointer+i-1;
                     inter_nodes(14,i) =rrt_tree(14,tree_pointer+i-1) + norm(inter_nodes(1:3,i)-rrt_tree(1:3,tree_pointer+i-1));
+                    inter_nodes(17,i) = tree_pointer+inter_nodes_num;  % son
                 end
                 plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'.');
             else  % last node
@@ -134,6 +137,7 @@ for i = 1:inter_nodes_num
                 % distance
                 inter_nodes(14,i) = rrt_tree(14,tree_pointer+i-1)+norm(inter_nodes(1:3,i)-rrt_tree(1:3,tree_pointer+i-1))+1;
                 inter_nodes(16,i) = 1;
+                inter_nodes(17,i) = tree_pointer+inter_nodes_num;
                 plot3(inter_nodes(1,i),inter_nodes(2,i),-inter_nodes(3,i),'o');
             end
             break;
@@ -183,12 +187,12 @@ end
 end
 
 
-function [optimal_trajectory]=find_optimal_waypoint()
+function [optimal_waypoint]=find_optimal_waypoint()
 global rrt_tree tree_pointer goal
 
 minimum_dis = 10000;
 trajectory_pointer = 1;
-optimal_trajectory_temp = zeros(3,tree_pointer);
+optimal_waypoint_temp = zeros(17,tree_pointer);
 
 
 for i = 1:tree_pointer
@@ -202,20 +206,24 @@ for i = 1:tree_pointer
 end
 
 while (minimum_node ~= 1)
-   optimal_trajectory_temp(1:3,trajectory_pointer) = rrt_tree(1:3,minimum_node);
+   optimal_waypoint_temp(:,trajectory_pointer) = rrt_tree(:,minimum_node);
    minimum_node = rrt_tree(13,minimum_node);
    trajectory_pointer = trajectory_pointer + 1;
 end
-optimal_trajectory = zeros(3,trajectory_pointer+1);
-optimal_trajectory(:,1) = goal';
-optimal_trajectory(:,2:end-1) =  optimal_trajectory_temp(:,1:trajectory_pointer-1);
-optimal_trajectory(:,end) = rrt_tree(1:3,1);
+optimal_waypoint = zeros(17,trajectory_pointer+1);
+optimal_waypoint(:,1) = [goal zeros(1,14)]';
+optimal_waypoint(:,2:end-1) =  optimal_waypoint_temp(:,1:trajectory_pointer-1);
+optimal_waypoint(:,end) = rrt_tree(:,1);
+optimal_waypoint(17,end) = 4;   %!!!!!!!!!!!!!!!!!!
 %[goal' rrt_tree(1:3,1) optimal_trajectory_temp(:,1:trajectory_pointer-1) rrt_tree(1:3,1)];
 %plot3(optimal_trajectory(1,:),optimal_trajectory(2,:),-optimal_trajectory(3,:),'r','LineWidth',2);
 end
 
 function [optimal_trajectory] = generate_optimal_trajectory(optimal_waypoints,ini_states)
-global drone_states pointer
+global drone_states pointer guidance_method stop_condition_replay_rrt rrt_tree goal
+
+guidance_method = 'REPLAT_RRT';
+
 optimal_trajectory = ini_states;
 
 n = size(optimal_waypoints,2);
@@ -223,7 +231,15 @@ for i = 1:n-1
     if i ~= 1
         ini_states = drone_states(:,pointer); 
     end
-   target = optimal_waypoints(:,n-i);
+    if i~=n-1
+       stop_condition_replay_rrt = optimal_waypoints(1:3,n-i);
+       target = rrt_tree(1:3,optimal_waypoints(17,n-i)) ;  % change to son node
+    else
+        stop_condition_replay_rrt = goal;
+        target = goal;
+    end
+   
+   
    control_guidance_loop(ini_states,target);
    optimal_trajectory = [optimal_trajectory drone_states(:,1:pointer)];
 end
