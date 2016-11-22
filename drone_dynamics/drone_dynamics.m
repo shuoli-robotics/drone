@@ -36,12 +36,12 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
      cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi) cos(phi)*cos(theta)];
 
  posistion = [x_earth y_earth z_earth]';
- velocity_body = [v_x_body v_y_body v_z_body]' + flag_drag* drag_model(states,F);
+ velocity_body = [v_x_body v_y_body v_z_body]' ;
  angle = [phi theta psi]';
  Omega = [p q r]';
  
  d_position = R_B_E * velocity_body;
- d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 F]')/m -cross(Omega,velocity_body);
+ d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 F]')/m -cross(Omega,velocity_body)+ flag_drag* drag_model(states,F);
  d_angle = R_d_angle*Omega;
  d_Omega = inv(I)*(M-cross(Omega,I*Omega));
  

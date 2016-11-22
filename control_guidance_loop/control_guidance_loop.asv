@@ -52,7 +52,7 @@ for i = 0:step:simulation_time
     pointer = pointer+1;
     time(pointer) = i;
     
-    if stop_simulation(guidance_method,target_states)
+    if stop_simulation(guidance_method)
         break;
     end
     
