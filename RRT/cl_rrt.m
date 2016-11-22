@@ -40,7 +40,7 @@ for i = 1:max_num
    end
     
    %% sort node based on distance
-   nearest_nodes = sort_node(p_rand,rrt_tree);
+   nearest_nodes = sort_node(p_rand,rrt_tree);  % too long
    
    %% try to connect p_rand with nearest_node
    for j = 1:tree_pointer
