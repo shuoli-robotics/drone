@@ -20,7 +20,7 @@ flag_drag = 1;
 
 %% simulation parameters
 
-simulation_time = 25;
+simulation_time = 20;
 step = 1/30;
 pointer = 1;
 

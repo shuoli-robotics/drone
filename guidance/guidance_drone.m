@@ -33,6 +33,14 @@ switch guidance_method
     case 'REPLAT_RRT'
         desired_position = target_states;
         desired_psi = 0;
+        
+    case 'VELOCITY'
+        desired_position = target_states;   % here target_states is desired_velocity
+        desired_psi = 0;
+        
+    case 'ATTITUDE'
+        desired_position = target_states;
+        desired_psi = 0;
 end
 
 end

@@ -52,8 +52,8 @@ end
 
 function [D] = drag_model(states,T)
 
-a_bla = -0.0476;
-k_par = -0.0036;
+a_bla = 0.0476;
+k_par = 0.0036;
 
 velocity_body = [states(4) states(5) states(6)]';
 A_bla = [a_bla 0 0;0 a_bla 0; 0 0 0];
