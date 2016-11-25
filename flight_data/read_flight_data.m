@@ -1,11 +1,11 @@
 function [ output_args ] = read_flight_data( )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-flight_data = csvread('roll_2.csv');
+flight_data = csvread('pitch_3.csv');
 
 matrix_x = [1 0 0;0 cos(pi) -sin(pi);0 sin(pi) cos(pi)];
 
-alpha = flight_data(3,14);
+alpha = -flight_data(3,14);
 matrix_z = [cos(alpha) -sin(alpha) 0;...
     sin(alpha) cos(alpha) 0 ; 0 0 1];
 
