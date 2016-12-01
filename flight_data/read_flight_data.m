@@ -1,11 +1,12 @@
 function [ output_args ] = read_flight_data( )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-flight_data = csvread('pitch_3.csv');
+flight_data = csvread('pitch_2.csv');
 
 matrix_x = [1 0 0;0 cos(pi) -sin(pi);0 sin(pi) cos(pi)];
 
 alpha = -flight_data(3,14);
+
 matrix_z = [cos(alpha) -sin(alpha) 0;...
     sin(alpha) cos(alpha) 0 ; 0 0 1];
 
@@ -68,5 +69,20 @@ subplot(1,3,3)
 plot(time,v_z);
 xlabel('time[s]');
 ylabel('v_z[m/s]');
-end
 
+figure(3)
+hold on;
+subplot(1,3,1)
+plot(time,phi/pi*180,time,phi_command/pi*180);
+xlabel('time[s]');
+ylabel('phi[degree]');
+subplot(1,3,2)
+plot(time,theta/pi*180,time,theta_command/pi*180);
+xlabel('time[s]');
+ylabel('theta[degree]');
+subplot(1,3,3)
+plot(time,psi/pi*180,time,psi_command/pi*180);
+
+xlabel('time[s]');
+ylabel('psi[degree]');
+end
