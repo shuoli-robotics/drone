@@ -24,8 +24,10 @@ fail_to_connect = 0;
 
 figure(6)
 plot_obstacle( [2.5 3 1.5],1 );
+plot3(target(1),target(2),-target(3),'pr','MarkerSize',15);
 grid on;
 hold on;
+plot3(ini_states(1),ini_states(2),-ini_states(3),'dm','MarkerSize',15);
 
 for i = 1:max_num
     if rand()<0.05

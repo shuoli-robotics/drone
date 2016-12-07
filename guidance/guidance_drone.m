@@ -18,6 +18,7 @@ switch guidance_method
         else
             desired_position = step_distance*[1 0 -1*time(pointer)]';
         end
+% desired_position = [1 1 1]';
         desired_psi = 0;
         
     case 'SET_POINT'

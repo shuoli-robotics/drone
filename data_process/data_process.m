@@ -1,7 +1,7 @@
 function [ output_args ] = data_process( input_args )
-%DATA_PROCESS 此处显示有关此函数的摘要
-%   此处显示详细说明
-flight_raw_data = csvread('yellow_set_theta_3.csv');
+%DATA_PROCESS ????????????????????????
+%   ????????????????
+flight_raw_data = csvread('yellow_hover.csv');
 [m,n] = size(flight_raw_data);
 m = 2500;  %!!!!!!!!!!!!!!!!!
 flight_data = zeros(m,n+6);
@@ -52,10 +52,10 @@ id_ax = 38;
 id_ay = 39;
 id_az = 40;
 
-% scale p q r and ax ay az
+% scale p q r and ax_body ay_body az_body
 flight_data(1:m,1:n) = flight_raw_data(1:m,1:n);
 flight_data(1:m,id_p:id_r) = flight_raw_data(1:m,id_p:id_r)*0.0139882;
-flight_data(1:m,id_ax_body:id_ay_body) = flight_raw_data(1:m,id_ax_body:id_ay_body)*0.0009766;
+flight_data(1:m,id_ax_body:id_az_body) = flight_raw_data(1:m,id_ax_body:id_az_body)*0.0009766;
 
 p = 1;
 for i = 1:m
@@ -70,17 +70,13 @@ for i = 1:m
  
 %  flight_data(i,id_vx_body:id_vz_body) = [R_E_B*[flight_raw_data(i,id_vx:id_vz)]']';
 %  flight_data(i,id_ax_body:id_az_body) = [R_E_B*[flight_raw_data(i,id_ax:id_az)]']';
-if i ~= 1 && rem(i,20) == 0
-    theta(p) = flight_data(i,id_theta);
-    v_x(p) = flight_data(i,id_vx);
-    if p == 1
-        a_x(p) = 0;
+    if i == 1
+         flight_data(i,id_ax:id_az) = [0 0 0];
     else
-        a_x(p) = (v_x(p)-v_x(p-1))*512/20;
-    end  
-    p = p+1;
+        flight_data(i,id_ax:id_az) = (flight_data(i,id_vx:id_vz)-flight_data(i-1,id_vx:id_vz))*512;
+    end
 end
-end
+
 
 figure(1);
 subplot(4,3,1)
@@ -108,26 +104,26 @@ plot(flight_data(1:m,id_time),flight_data(1:m,id_vz));
 xlabel('t/s');
 ylabel('vz[m/s]');
 subplot(4,3,7)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_phi)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
+plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_phi)/pi*180,...
+    flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
+%plot(flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
 xlabel('t/s');
 ylabel('phi[degree]');
-%legend('phi setpoint','phi measured');
+legend('phi setpoint','phi measured');
 subplot(4,3,8)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_theta)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
+plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_theta)/pi*180,...
+    flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
+% plot(flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
 xlabel('t/s');
 ylabel('theta[degree]');
-% legend('theta setpoint','theta measured');
+ legend('theta setpoint','theta measured');
 subplot(4,3,9)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_psi)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
+plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_psi)/pi*180,...
+    flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
+% plot(flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
 xlabel('t/s');
 ylabel('psi[degree]');
-%legend('psi setpoint','psi measured');
+legend('psi setpoint','psi measured');
 
 subplot(4,3,10)
 plot(flight_data(1:m,id_time),flight_data(1:m,id_p));
@@ -143,6 +139,41 @@ subplot(4,3,12)
 plot(flight_data(1:m,id_time),flight_data(1:m,id_r));
 xlabel('t/s');
 ylabel('r[deg/s]');
+
+figure(2)
+subplot(1,3,1)
+plot(flight_data(:,id_time),flight_data(:,id_ax_body));
+xlabel('t[s]');
+ylabel('a\_x\_body[m/s^2]');
+
+subplot(1,3,2)
+plot(flight_data(:,id_time),flight_data(:,id_ay_body));
+xlabel('t[s]');
+ylabel('a\_y\_body[m/s^2]');
+
+subplot(1,3,3)
+plot(flight_data(:,id_time),flight_data(:,id_az_body));
+xlabel('t[s]');
+ylabel('a\_z\_body[m/s^2]');
+
+figure(3)
+subplot(1,3,1)
+plot(flight_data(:,id_time),flight_data(:,id_ax));
+xlabel('t[s]');
+ylabel('a\_x[m/s^2]');
+
+subplot(1,3,2)
+plot(flight_data(:,id_time),flight_data(:,id_ay));
+xlabel('t[s]');
+ylabel('a\_y[m/s^2]');
+
+subplot(1,3,3)
+plot(flight_data(:,id_time),flight_data(:,id_az));
+xlabel('t[s]');
+ylabel('a\_z[m/s^2]');
+
+
+
 a_11 = 0;
 a_12 = 0;
 a_21 = 0;

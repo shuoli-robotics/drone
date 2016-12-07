@@ -1,6 +1,6 @@
 function [flight_data_body_coor ] = data_transform( input_args )
-%DATA_TRANSFORM 此处显示有关此函数的摘要
-%   此处显示详细说明
+%DATA_TRANSFORM ????????????????????????
+%   ????????????????
 
 flight_data_raw = csvread('roll_3.csv');
 flight_data_body_coor = zeros(size(flight_data_raw,1),20);
@@ -27,6 +27,7 @@ for i = 1:size(flight_data_raw,1)
     flight_data_body_coor(i,21:24) = flight_data_raw(i,31:34)/60; % actual rotor speed (HZ!!!) 
     flight_data_body_coor(i,25) = sum(7.226e-6*( flight_data_body_coor(i,21:24).^2)-0.0002327*( flight_data_body_coor(i,21:24))+0.008156); % total trust
 end
+
 
 
 

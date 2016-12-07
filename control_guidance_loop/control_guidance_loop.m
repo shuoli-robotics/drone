@@ -7,7 +7,7 @@ global i time desired_omega desired_angular_velocity
 global desired_angle desired_velocity_body desired_position 
 global controller guidance_method
 
-controller = 'PID';  % INDI or PID
+controller = 'INDI';  % INDI or PID
 
 global_parameters(ini_states);
 
@@ -25,19 +25,19 @@ for i = 0:step:simulation_time
 
    %% velocity controller
    %desired_velocity_body(:,pointer) = [1 1 -1]';
-    if i<5 || i > 11
-        desired_velocity_body(:,pointer) = [0 0 0]';
-    end
+%     if i<5 || i > 11
+%         desired_velocity_body(:,pointer) = [0 0 0]';
+%     end
     [ desired_angle(1:2,pointer),F ] = controller_velocity_body( desired_velocity_body(:,pointer) );
 
  %% angle controller
 
   %desired_angle(:,pointer) = [5/180*pi 0 0]';
-    if i<8 && i>=5 
-        desired_angle(:,pointer) = [5/180*pi 0 0]';
-    elseif i>=8 && i<11
-        desired_angle(:,pointer) = [-5/180*pi 0 0]';
-    end
+%     if i<8 && i>=5 
+%         desired_angle(:,pointer) = [5/180*pi 0 0]';
+%     elseif i>=8 && i<11
+%         desired_angle(:,pointer) = [-5/180*pi 0 0]';
+%     end
     desired_angular_velocity(:,pointer) = controller_angle( desired_angle(:,pointer));
     %temp = desired_angular_velocity(:,pointer)
  %% angular velocity controller 
@@ -66,7 +66,7 @@ for i = 0:step:simulation_time
 end
 
 done = 1;
-plot_actuator();
+%plot_actuator();
 end
 
 

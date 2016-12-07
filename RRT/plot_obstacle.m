@@ -11,5 +11,5 @@ plot3(point(1,:),point(2,:),point(3,:),'b','LineWidth',5);
 % for i = 1:4
 %    plot3(point(:,i),point(:,i)); 
 % end
-
+hold on;
 end

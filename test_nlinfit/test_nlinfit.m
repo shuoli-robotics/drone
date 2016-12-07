@@ -44,7 +44,7 @@ end
 x1 = [flight_data_body_coor(:,25) flight_data_body_coor(:,8)];
 y1 = flight_data_body_coor(:,5);
 %x_axis_body_fit_fun = @(beta,x)(-x(:,1)/m*beta.*x(:,2));
-x_axis_body_fit_fun = @(beta,x)(-g*beta.*x(:,2));
+x_axis_body_fit_fun = @(beta,x)(-g*beta.*x1(:,2));
 beta0 = -0.05;
 beta_estimate1 = nlinfit(x1,y1,x_axis_body_fit_fun,beta0);
 beta_estimate2 = lsqcurvefit(x_axis_body_fit_fun,beta0,x1,y1);
@@ -52,9 +52,9 @@ beta_estimate2 = lsqcurvefit(x_axis_body_fit_fun,beta0,x1,y1);
 x2 = [flight_data_body_coor(:,25) flight_data_body_coor(:,9)];
 y2 = flight_data_body_coor(:,6);
 %y_axis_body_fit_fun = @(beta,x)(-x(:,1)/m*beta.*x(:,2));
-y_axis_body_fit_fun = @(beta,x)(-g/m*beta.*x(:,2));
+y_axis_body_fit_fun = @(beta,x)(-g*beta.*x2(:,2));
 beta0 = -0.05;
-beta_estimate3 = nlinfit(x,y,x_axis_body_fit_fun,beta0);
-beta_estimate4 = lsqcurvefit(x_axis_body_fit_fun,beta0,x,y);
+beta_estimate3 = nlinfit(x2,y2,x_axis_body_fit_fun,beta0);
+beta_estimate4 = lsqcurvefit(x_axis_body_fit_fun,beta0,x2,y2);
 
 temp = 1;

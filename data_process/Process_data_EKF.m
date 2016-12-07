@@ -135,132 +135,157 @@ for k = 2:data_size
 
 end
 
-% %gyro int phi
-% figure
-% plot(time_stamp,rad2deg(angle_int(:,1)),time_stamp,rad2deg(phi(:)))
-% title('phi')
-% 
-% %gyro int theta
-% figure
-% plot(time_stamp,rad2deg(angle_int(:,2)),time_stamp,rad2deg(theta(:)))
-% title('theta')
-% 
-% %gyro int psi
-% figure
-% plot(time_stamp,rad2deg(angle_int(:,3)),time_stamp,rad2deg(psi(:)))
-% title('psi')
-% 
-% % %acc x nav frame
+% % %gyro int phi
 % % figure
-% % plot(time_stamp,acc_nav(:,1))%,time_stamp,rad2deg(psi(:)))
-% % title('acc x nav frame')
+% % plot(time_stamp,rad2deg(angle_int(:,1)),time_stamp,rad2deg(phi(:)))
+% % title('phi')
 % % 
-% % %acc y nav frame
+% % %gyro int theta
 % % figure
-% % plot(time_stamp,acc_nav(:,2))%,time_stamp,rad2deg(psi(:)))
-% % title('acc y nav frame')
+% % plot(time_stamp,rad2deg(angle_int(:,2)),time_stamp,rad2deg(theta(:)))
+% % title('theta')
 % % 
-% % %acc z nav frame
+% % %gyro int psi
 % % figure
-% % plot(time_stamp,acc_nav(:,3))%,time_stamp,rad2deg(psi(:)))
-% % title('acc z nav frame')
+% % plot(time_stamp,rad2deg(angle_int(:,3)),time_stamp,rad2deg(psi(:)))
+% % title('psi')
+% % 
+% % % %acc x nav frame
+% % % figure
+% % % plot(time_stamp,acc_nav(:,1))%,time_stamp,rad2deg(psi(:)))
+% % % title('acc x nav frame')
+% % % 
+% % % %acc y nav frame
+% % % figure
+% % % plot(time_stamp,acc_nav(:,2))%,time_stamp,rad2deg(psi(:)))
+% % % title('acc y nav frame')
+% % % 
+% % % %acc z nav frame
+% % % figure
+% % % plot(time_stamp,acc_nav(:,3))%,time_stamp,rad2deg(psi(:)))
+% % % title('acc z nav frame')
+% % 
+% % %raw acc x
+% % figure
+% % plot(time_stamp,acc_x)
+% % title('raw acc x')
+% % 
+% % %raw acc y
+% % figure
+% % plot(time_stamp,acc_y)
+% % title('raw acc y')
+% % 
+% % %raw acc z
+% % figure
+% % plot(time_stamp,acc_z)
+% % title('raw acc z')
+% % 
+% % %raw acc x
+% % figure
+% % plot(time_stamp,gyro_p)
+% % title('raw gyro p')
+% % 
+% % %raw acc y
+% % figure
+% % plot(time_stamp,gyro_q)
+% % title('raw gyro q')
+% % 
+% % %raw acc z
+% % figure
+% % plot(time_stamp,gyro_r)
+% % title('raw gyro r')
+% % 
+% % %speed x
+% % figure
+% % plot(time_stamp,speed_nav(:,1),time_stamp,vel_x)
+% % title('speed x')
+% % 
+% % %speed y
+% % figure
+% % plot(time_stamp,speed_nav(:,2),time_stamp,vel_y)
+% % title('speed y')
+% % 
+% % %speed z
+% % figure
+% % plot(time_stamp,speed_nav(:,3),time_stamp,vel_z)
+% % title('speed z')
 % 
-% %raw acc x
+% % speed x
 % figure
-% plot(time_stamp,acc_x)
-% title('raw acc x')
-% 
-% %raw acc y
-% figure
-% plot(time_stamp,acc_y)
-% title('raw acc y')
-% 
-% %raw acc z
-% figure
-% plot(time_stamp,acc_z)
-% title('raw acc z')
-% 
-% %raw acc x
-% figure
-% plot(time_stamp,gyro_p)
-% title('raw gyro p')
-% 
-% %raw acc y
-% figure
-% plot(time_stamp,gyro_q)
-% title('raw gyro q')
-% 
-% %raw acc z
-% figure
-% plot(time_stamp,gyro_r)
-% title('raw gyro r')
-% 
-% %speed x
-% figure
-% plot(time_stamp,speed_nav(:,1),time_stamp,vel_x)
+% plot(time_stamp,vel_x,time_stamp,speed_nav(:,1))
 % title('speed x')
 % 
 % %speed y
 % figure
-% plot(time_stamp,speed_nav(:,2),time_stamp,vel_y)
+% plot(time_stamp,vel_y,time_stamp,speed_nav(:,2))
 % title('speed y')
 % 
 % %speed z
 % figure
-% plot(time_stamp,speed_nav(:,3),time_stamp,vel_z)
+% plot(time_stamp,vel_z,time_stamp,speed_nav(:,3))
 % title('speed z')
+% 
+% % bias p
+% figure
+% plot(time_stamp,X_int(:,13))
+% title('bias p')
+% 
+% %bias q
+% figure
+% plot(time_stamp,X_int(:,14))
+% title('bias q')
+% 
+% %bias r
+% figure
+% plot(time_stamp,X_int(:,15))
+% title('bias r')
+% 
+% %gyro int phi
+% figure
+% plot(time_stamp,rad2deg(X_int(:,7)),time_stamp,rad2deg(phi(:)))
+% title('phi')
+% 
+% %gyro int theta
+% figure
+% plot(time_stamp,rad2deg(X_int(:,8)),time_stamp,rad2deg(theta(:)))
+% title('theta')
+% 
+% %gyro int psi
+% figure
+% plot(time_stamp,rad2deg(X_int(:,9)),time_stamp,rad2deg(psi(:)))
+% title('psi')
+% 
+% %3d plot
+ figure(22)
 
-% speed x
-figure
-plot(time_stamp,vel_x,time_stamp,speed_nav(:,1))
-title('speed x')
-
-%speed y
-figure
-plot(time_stamp,vel_y,time_stamp,speed_nav(:,2))
-title('speed y')
-
-%speed z
-figure
-plot(time_stamp,vel_z,time_stamp,speed_nav(:,3))
-title('speed z')
-
-% bias p
-figure
-plot(time_stamp,X_int(:,13))
-title('bias p')
-
-%bias q
-figure
-plot(time_stamp,X_int(:,14))
-title('bias q')
-
-%bias r
-figure
-plot(time_stamp,X_int(:,15))
-title('bias r')
-
-%gyro int phi
-figure
-plot(time_stamp,rad2deg(X_int(:,7)),time_stamp,rad2deg(phi(:)))
-title('phi')
-
-%gyro int theta
-figure
-plot(time_stamp,rad2deg(X_int(:,8)),time_stamp,rad2deg(theta(:)))
-title('theta')
-
-%gyro int psi
-figure
-plot(time_stamp,rad2deg(X_int(:,9)),time_stamp,rad2deg(psi(:)))
-title('psi')
-
-%3d plot
-figure
 plot3(X_int(:,1),X_int(:,2),-X_int(:,3),pos_x,pos_y,-pos_z)
 title('position xyz')
 %axis([-1 7, -2 6, 0 3])
+axis([0 8 0 0.3 0 2]);
 grid on
 
-
-
+figure (21)
+subplot(2,3,1)
+plot(time_stamp,vel_x,time_stamp,speed_nav(:,1));
+xlabel('t[s]');
+ylabel('v_x[m/s]');
+subplot(2,3,2)
+plot(time_stamp,vel_y,time_stamp,speed_nav(:,2));
+xlabel('t[s]');
+ylabel('v_y[m/s]');
+subplot(2,3,3)
+plot(time_stamp,vel_y,time_stamp,speed_nav(:,3))
+xlabel('t[s]');
+ylabel('v_z[m/s]');
+subplot(2,3,4)
+plot(time_stamp,rad2deg(X_int(:,7)),time_stamp,rad2deg(phi(:)))
+xlabel('t[s]');
+ylabel('phi[degree]');
+subplot(2,3,5)
+plot(time_stamp,rad2deg(X_int(:,8)),time_stamp,rad2deg(theta(:)))
+xlabel('t[s]');
+ylabel('theta[degree]');
+subplot(2,3,6)
+plot(time_stamp,rad2deg(X_int(:,9)),time_stamp,rad2deg(psi(:)))
+xlabel('t[s]');
+ylabel('psi[degree]');
