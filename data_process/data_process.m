@@ -3,8 +3,8 @@ function [ output_args ] = data_process( input_args )
 %   此处显示详细说明
 flight_raw_data = csvread('yellow_set_theta_3.csv');
 [m,n] = size(flight_raw_data);
-m = 2500;  %!!!!!!!!!!!!!!!!!
-flight_data = zeros(m,n+6);
+%m = 2500;  %!!!!!!!!!!!!!!!!!
+flight_data = zeros(1,n+6);
 id_counter = 1;
 id_time = 2;
 
@@ -44,103 +44,108 @@ id_rpm_obs2 = 32;
 id_rpm_obs3 = 33;
 id_rpm_obs4 = 34;
 
-id_vx_body = 35;
-id_vy_body = 36;
-id_vz_body = 37;
+id_vx_body = 36;
+id_vy_body = 37;
+id_vz_body = 38;
 
-id_ax = 38;
-id_ay = 39;
-id_az = 40;
-
-% scale p q r and ax ay az
-flight_data(1:m,1:n) = flight_raw_data(1:m,1:n);
-flight_data(1:m,id_p:id_r) = flight_raw_data(1:m,id_p:id_r)*0.0139882;
-flight_data(1:m,id_ax_body:id_ay_body) = flight_raw_data(1:m,id_ax_body:id_ay_body)*0.0009766;
+id_ax = 39;
+id_ay = 40;
+id_az = 41;
 
 p = 1;
+x_temp = 10000;
+
 for i = 1:m
-   phi = flight_raw_data(i,id_phi);
-   theta = flight_raw_data(i,id_theta);
-   psi = flight_raw_data(i,id_psi);
-    R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
-     sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi)...
-     sin(phi)*sin(theta)*sin(psi)+cos(phi)*cos(psi) sin(phi)*cos(theta);...
-     cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi)...
-     cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi) cos(phi)*cos(theta)];
- 
-%  flight_data(i,id_vx_body:id_vz_body) = [R_E_B*[flight_raw_data(i,id_vx:id_vz)]']';
-%  flight_data(i,id_ax_body:id_az_body) = [R_E_B*[flight_raw_data(i,id_ax:id_az)]']';
-if i ~= 1 && rem(i,20) == 0
-    theta(p) = flight_data(i,id_theta);
-    v_x(p) = flight_data(i,id_vx);
-    if p == 1
-        a_x(p) = 0;
-    else
-        a_x(p) = (v_x(p)-v_x(p-1))*512/20;
-    end  
+if flight_raw_data(i,id_x) == x_temp
+    continue;
+else
+    flight_data(p,1:n) = flight_raw_data(i,:);
+    flight_data(p,id_p:id_r) = flight_raw_data(i,id_p:id_r)*0.0139882;
+    flight_data(p,id_ax_body:id_az_body) = flight_raw_data(i,id_ax_body:id_az_body)*0.0009766;
+    x_temp = flight_raw_data(i,id_x);
     p = p+1;
 end
 end
 
+v_earth = zeros(size(flight_data,1),3);
+
+
+for i = 1:size(flight_data,1)
+    if i == 1
+        v_earth(i,:) = [0 0 0];
+    else
+        v_earth(i,:) = (flight_data(i,id_x) - flight_data(i-1,id_x))/...
+            (flight_data(i,id_time) - flight_data(i-1,id_time));
+    end
+end
+
+figure(5)
+plot(flight_data(:,id_time),v_earth(:,1));
+hold on
+plot(flight_data(:,id_time),flight_data(:,id_vx))
+plot(flight_data(:,id_time),smooth(v_earth(:,1),20));
+plot(flight_raw_data(:,id_time),flight_raw_data(:,id_vx));
+
+
 figure(1);
 subplot(4,3,1)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_x));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_x));
 xlabel('t/s');
 ylabel('x[m]');
 subplot(4,3,2)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_y));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_y));
 xlabel('t/s');
 ylabel('y[m]');
 subplot(4,3,3)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_z));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_z));
 xlabel('t/s');
 ylabel('z[m]');
 subplot(4,3,4)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_vx));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_vx));
 xlabel('t/s');
 ylabel('vx[m/s]');
 subplot(4,3,5)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_vy));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_vy));
 xlabel('t/s');
 ylabel('vy[m/s]');
 subplot(4,3,6)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_vz));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_vz));
 xlabel('t/s');
 ylabel('vz[m/s]');
 subplot(4,3,7)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_phi)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_phi)/pi*180);
+% plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_sp_phi)/pi*180,...
+%     flight_data(1:p-1,id_time),flight_data(1:p-1,id_phi)/pi*180);
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_phi)/pi*180);
 xlabel('t/s');
 ylabel('phi[degree]');
 %legend('phi setpoint','phi measured');
 subplot(4,3,8)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_theta)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_theta)/pi*180);
+% plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_sp_theta)/pi*180,...
+%     flight_data(1:p-1,id_time),flight_data(1:p-1,id_theta)/pi*180);
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_theta)/pi*180);
 xlabel('t/s');
 ylabel('theta[degree]');
 % legend('theta setpoint','theta measured');
 subplot(4,3,9)
-% plot(flight_data(1:m,id_time),flight_data(1:m,id_sp_psi)/pi*180,...
-%     flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
-plot(flight_data(1:m,id_time),flight_data(1:m,id_psi)/pi*180);
+% plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_sp_psi)/pi*180,...
+%     flight_data(1:p-1,id_time),flight_data(1:p-1,id_psi)/pi*180);
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_psi)/pi*180);
 xlabel('t/s');
 ylabel('psi[degree]');
 %legend('psi setpoint','psi measured');
 
 subplot(4,3,10)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_p));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_p));
 xlabel('t/s');
 ylabel('p[deg/s]');
 
 subplot(4,3,11)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_q));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_q));
 xlabel('t/s');
 ylabel('q[deg/s]');
 
 subplot(4,3,12)
-plot(flight_data(1:m,id_time),flight_data(1:m,id_r));
+plot(flight_data(1:p-1,id_time),flight_data(1:p-1,id_r));
 xlabel('t/s');
 ylabel('r[deg/s]');
 a_11 = 0;
