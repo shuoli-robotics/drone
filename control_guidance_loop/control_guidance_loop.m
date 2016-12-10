@@ -7,7 +7,7 @@ global i time desired_omega desired_angular_velocity
 global desired_angle desired_velocity_body desired_position 
 global controller guidance_method
 
-controller = 'INDI';  % INDI or PID
+controller = 'PID';  % INDI or PID
 
 global_parameters(ini_states);
 
@@ -66,7 +66,7 @@ for i = 0:step:simulation_time
 end
 
 done = 1;
-%plot_actuator();
+plot_actuator();
 end
 
 
