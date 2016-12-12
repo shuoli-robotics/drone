@@ -9,7 +9,7 @@ M = [(-omega(2)^2+omega(4)^2)*k_F*L (omega(1)^2-omega(3)^2)*k_F*L ...
     (-k_M*omega(1)^2+k_M*omega(2)^2-k_M*omega(3)^2+k_M*omega(4)^2)]';
 
 Q_guess = diag([0 0 0]);
-R_guess = diag([0.2^2 0.2^2 0.2^2]);
+R_guess = diag([0.3^2 0.3^2 0.3^2]);
 H = diag([1 1 1]);
 if pointer == 1
      p_estimated_k_1 =0;
@@ -28,7 +28,7 @@ end
     
     P_k_1 = estimated_P;
   
-    predicted_pqr = estimated_pqr_last_step +  inv(I)*(M-cross(estimated_pqr_last_step,I*estimated_pqr_last_step))*step;
+    predicted_pqr = estimated_pqr_last_step +  inv(I)*(M-cross(estimated_pqr_last_step,I*estimated_pqr_last_step));
     F = -inv(I)*[0  (I_zz-I_yy)*r_estimated_k_1  (I_zz-I_yy)*q_estimated_k_1;...
         (I_xx-I_zz)*r_estimated_k_1  0  (I_xx-I_zz)*p_estimated_k_1;...
         (I_yy-I_xx)*q_estimated_k_1 (I_yy-I_xx)*p_estimated_k_1 0];

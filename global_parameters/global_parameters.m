@@ -6,6 +6,7 @@ global simulation_time step pointer;
 global drone_states actuator_states time desired_omega desired_angular_velocity desired_angle desired_velocity_body
 global position_error desired_position angle_error velocity_body_error M_last_step current_angular_velocity_accel
 global sensor_states flag_drag reference_x reference_y reference_z setpoint_x setpoint_y setpoint_z
+global estimated_pqr estimated_P sensor_states_raw
 %% model parameters
 k_F = 6.11*10^-8;
 k_M = 1.5*10^-9;
@@ -56,5 +57,9 @@ reference_z(1,1) = drone_states(3,1);
 setpoint_x = 1;
 setpoint_y = 1;
 setpoint_z = -1;
+
+%% Kalman Filter
+estimated_pqr = zeros(3,simulation_time/step);
+estimated_P = zeros(2,simulation_time/step);
 end
 
