@@ -1,10 +1,12 @@
 function [ filtered_pqr ] = EKF_pqr( measured_pqr,omega )
 %EKF_PQR Summary of this function goes here
 %   Detailed explanation goes here
-global pointer estimated_pqr step I estimated_P
+global pointer estimated_pqr step I estimated_P K_F L k_M
 I_xx= I(1,1);
 I_yy =  I(2,2);
 I_zz =  I(3,3);
+M = [(-omega(2)^2+omega(4)^2)*k_F*L (omega(1)^2-omega(3)^2)*k_F*L ...
+    (-k_M*omega(1)^2+k_M*omega(2)^2-k_M*omega(3)^2+k_M*omega(4)^2)]';
 
 Q_guess = diag([0 0 0]);
 R_guess = diag([0.3^2 0.3^2 0.3^2]);
@@ -15,7 +17,6 @@ r_estimated_k_1 = estimated_pqr(3,pointer-1);
 
 P_k_1 = estimated_P(pointer -1);
 H = diag([1 1 1]);
-% %to do : add estimated rotor speed to calculate M
 
 predicted_pqr = estimated_pqr(:,pointer-1) +  inv(I)*(M-cross(estimated_pqr(:,pointer-1),I*estimated_pqr(:,pointer-1)));
 F = -inv(I)*[0  (I_zz-I_yy)*r_estimated_k_1  (I_zz-I_yy)*q_estimated_k_1;...
