@@ -6,7 +6,7 @@ global flag_model_uncertainty
 
 %% model uncertainty
 if flag_model_uncertainty == 1
-    Q_pqr = diag(0.02*[1 1 1]).^2;
+    Q_pqr = diag(0.01*[1 1 1]).^2;
     mu_pqr = [0 0 0];
 else
     Q_pqr = 0;

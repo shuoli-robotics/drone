@@ -1,7 +1,7 @@
 function [ filtered_pqr ] = EKF_pqr( measured_pqr,omega )
 %EKF_PQR Summary of this function goes here
 %   Detailed explanation goes here
-global pointer estimated_pqr step I estimated_P k_F L k_M flag_model_uncertainty
+global pointer estimated_pqr step I estimated_P_pqr k_F L k_M flag_model_uncertainty
 I_xx= I(1,1);
 I_yy =  I(2,2);
 I_zz =  I(3,3);
@@ -20,7 +20,7 @@ if pointer == 1
      p_estimated_k_1 =0;
      q_estimated_k_1 = 0;
      r_estimated_k_1 = 0;
-     estimated_P = zeros(3,3);
+     estimated_P_pqr = zeros(3,3);
      estimated_pqr_last_step = [0 0 0]';
       
 else
@@ -31,7 +31,7 @@ else
     estimated_pqr_last_step =  estimated_pqr(:,pointer-1);
 end
     
-    P_k_1 = estimated_P;
+    P_k_1 = estimated_P_pqr;
   
     predicted_pqr = estimated_pqr_last_step +  inv(I)*(M-cross(estimated_pqr_last_step,I*estimated_pqr_last_step))*step;
     F = -inv(I)*[0  (I_zz-I_yy)*r_estimated_k_1  (I_zz-I_yy)*q_estimated_k_1;...
@@ -49,6 +49,6 @@ end
     
     estimated_pqr(:,pointer) = filtered_pqr;
     P_k = (diag([1 1 1])-K_k*diag([1 1 1]))*P_k_k_1*(diag([1 1 1])-K_k*H)'+K_k*R_guess*K_k';
-    estimated_P = P_k;
+    estimated_P_pqr = P_k;
 end
 
