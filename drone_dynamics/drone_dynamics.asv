@@ -2,16 +2,8 @@ function [ d_states ] = drone_dynamics( states,omega )
 % 
 %   
 global m I k_F k_M L g R_d_angle current_angular_velocity_accel flag_drag
-global flag_model_uncertainty
 
-%% model uncertainty
-if flag_model_uncertainty == 1
-    Q_pqr = diag(0.02*[1 1 1]).^2;
-    mu_pqr = [0 0 0];
-else
-    Q_pqr = 0;
-    mu_pqr = [0 0 0];
-end
+
 
 x_earth = states(1);
 y_earth = states(2);
@@ -54,7 +46,7 @@ R_E_B = [cos(theta)*cos(psi) cos(theta)*sin(psi) -sin(theta);...
  d_position = R_B_E * velocity_body;
  d_velocity_body = (R_E_B*[0 0 g]'*m + [0 0 F]')/m -cross(Omega,velocity_body)+ flag_drag* drag_model(states,F);
  d_angle = R_d_angle*Omega;
- d_Omega = inv(I)*(M-cross(Omega,I*Omega))+[mvnrnd(mu_pqr,Q_pqr,1)]';
+ d_Omega = inv(I)*(M-cross(Omega,I*Omega));
  
  current_angular_velocity_accel = d_Omega;
  
